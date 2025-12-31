@@ -1,4 +1,9 @@
 .shelf{
     display: flex;
     flex-direction: column;
+    gap: 10px;
+}
+
+.add_Book_Button{
+    width: 100px;
 }
