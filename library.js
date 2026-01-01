@@ -29,7 +29,7 @@ function AddBookToLibrary(title, author, pages, read){
 AddBookToLibrary('The Hobbit', 'J.R.R Toklien', 295, false)
 AddBookToLibrary('The Journey of Elaina', 'Jougi Shiraishi', 286, true)
 AddBookToLibrary('Harry Potter', 'J.K. Rowling', 223, false)
-showShelf()
+
 
 console.log(myLibrary[0].info())
 console.log(myLibrary[1].info())
@@ -46,6 +46,14 @@ function removeBookById(id) {
     const el = document.querySelector(`[data-book-id="${id}"]`)
     el?.remove()
 }
+
+// Change read status
+Book.prototype.switchRead = function(){
+    this.read = !this.read
+}
+
+myLibrary[0].switchRead()
+
 // Show book on shelf
 const shelf = document.querySelector(".shelf")
 function showShelf(){
@@ -53,7 +61,18 @@ function showShelf(){
     for (const book of myLibrary){
         const bookOnShelf = document.createElement("span")
         bookOnShelf.textContent = book.info()
+
         bookOnShelf.dataset.bookId = book.id
+        bookOnShelf.dataset.bookRead = book.read
+
+        const switch_read = document.createElement("button")
+        switch_read.textContent = "Read"
+        switch_read.addEventListener('click', (e) => {
+            book.switchRead()
+            showShelf()
+        })
+
+
 
         const delete_button = document.createElement("button")
         delete_button.textContent = "Remove Book"
@@ -61,13 +80,17 @@ function showShelf(){
             removeBookById(book.id)
             bookOnShelf.remove()
         })
-    
+
+
+
+        bookOnShelf.appendChild(switch_read)
         bookOnShelf.appendChild(delete_button)
+
         shelf.appendChild(bookOnShelf)
     }
 }
 
-
+showShelf()
 
 
 // Add book to shelf
