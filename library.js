@@ -1,22 +1,25 @@
 const myLibrary = []
 
-function Book(title, author, pages, read, id){
-    if(!new.target){
-        throw Error("Use 'new'")
-    }
-
+class Book{
+    constructor(title, author, pages, read, id){
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
     this.id = id;
+    }
+
+    info(){
+        const readStatus = this.read ? "has been read" : "not read yet";
+        return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}, ID: ${this.id}`
+    }
+
+    switchRead() {
+        this.read = !this.read
+    }
 
 }
 
-Book.prototype.info = function(){
-    const readStatus = this.read ? "has been read" : "not read yet";
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}, ID: ${this.id}` 
-}
 
 
 function AddBookToLibrary(title, author, pages, read){
@@ -45,11 +48,6 @@ function removeBookById(id) {
 
     const el = document.querySelector(`[data-book-id="${id}"]`)
     el?.remove()
-}
-
-// Change read status
-Book.prototype.switchRead = function(){
-    this.read = !this.read
 }
 
 myLibrary[0].switchRead()
