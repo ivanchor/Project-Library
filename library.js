@@ -123,6 +123,12 @@ cancelBook.addEventListener('click', (e) => {
 submitBook.addEventListener('click', (e) => {
     e.preventDefault()
 
+    if (!validateAuthor()) {
+        book_author.reportValidity();
+        return;
+    }
+
+
     const title = book_title.value
     const author = book_author.value
     const pages = book_pages.value
@@ -132,3 +138,17 @@ submitBook.addEventListener('click', (e) => {
     clear_inputs()
     book_form.close()
 })
+
+
+function validateAuthor() {
+  if (!book_author.value.endsWith("Hi")) {
+    book_author.setCustomValidity("Author needs Hi");
+    return false;
+  } else {
+    book_author.setCustomValidity("");
+    return true;
+  }
+}
+
+book_author.addEventListener("input", validateAuthor);
+
